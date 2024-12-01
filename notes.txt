@@ -1,0 +1,14 @@
+1/ check buff and fd
+2/ read func
+    1- allocate
+        . read
+    2- join
+3/ one line func
+    1- check \0
+    2- skip \n
+    3- allocate line
+        . cp
+4/ update buff
+    1- skip \n
+    2- cp
+    3- free

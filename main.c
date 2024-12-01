@@ -26,3 +26,21 @@ printf("result = %s\n", str);
 free(str);
 close(fd);
 }
+
+
+// #include <fcntl.h>
+// #include <stdio.h>
+
+// int main(void)
+// {
+//     int fd = open("test.txt", O_RDONLY);
+//     char *line;
+
+//     while ((line = get_next_line(fd)))
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
+//     close(fd);
+//     return (0);
+// }
