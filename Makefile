@@ -6,7 +6,7 @@
 #    By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/02 17:24:47 by oel-mado          #+#    #+#              #
-#    Updated: 2024/12/02 17:25:55 by oel-mado         ###   ########.fr        #
+#    Updated: 2024/12/02 18:28:20 by oel-mado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,17 @@ SRC = get_next_line.c get_next_line_utils.c
 OBJ = ${SRC:.c=.o}
 
 all: ${OBJ}
-        ar rcs ${NAME} ${OBJ}
+		ar rcs ${NAME} ${OBJ}
 
 %.o: %.c get_next_line.h
-        ${CC} ${CFLAGS} -c $< -o $@
+		${CC} ${CFLAGS} -c $< -o $@
+
+f: fclean all clean
+		cc ${CFLAGS} main.c ${NAME} -o out
+		@echo "\n"
+		./out | cat -e
+		@echo "\n"
+		@rm out
 
 clean:
 		rm -f ${OBJ}
