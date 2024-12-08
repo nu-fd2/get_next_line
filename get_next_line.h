@@ -6,7 +6,7 @@
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 17:24:43 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/12/08 10:24:37 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/09 00:43:40 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t n);
 size_t	ft_strlen(const char *who);
 size_t	ft_strlcat(char *dst, const char *src, size_t n);
+char    *ft_strdup(const char *s1);
+void	*ft_memmove(void *dst, const void *src, size_t len);
 
 #endif //GET_NEXT_LINE_H

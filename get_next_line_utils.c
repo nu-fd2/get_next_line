@@ -6,7 +6,7 @@
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:03:41 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/11/18 18:43:08 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/08 23:08:35 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,42 @@ size_t	ft_strlen(const char *who)
 	while (who[ask])
 		ask++;
 	return (ask);
+}
+
+char    *ft_strdup(const char *s1)
+{
+	size_t  ln;
+	char    *s2;
+
+	ln = ft_strlen(s1) + 1;
+	s2 = malloc(sizeof(char) * ln);
+	if (!s2)
+			return (NULL);
+	ft_strlcpy(s2, s1, ln);
+	return (s2);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	size_t			i;
+	unsigned char	*d;
+	unsigned char	*s;
+
+	i = 0;
+	d = dst;
+	s = (unsigned char *)src;
+	if (d == s)
+		return (dst);
+	if (s < d)
+		while (len-- > 0)
+			*(d + len) = *(s + len);
+	else
+	{
+		while (len > i)
+		{
+			*(d + i) = *(s + i);
+			i++;
+		}
+	}
+	return (dst);
 }

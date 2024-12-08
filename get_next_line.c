@@ -6,7 +6,7 @@
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:04:15 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/12/08 10:30:49 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/09 00:32:04 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,41 @@
 
 static char *rdd(char *buff, int fd)
 {
+	char *yup;
 	char *neo;
 	int i;
 
-	neo = ft_calloc(BUFFER_SIZE + 1, 1);
-	if (!neo)
+	yup = ft_calloc(BUFFER_SIZE + 1, 1);
+	if (!yup)
 		return (NULL);
-	i = read(fd, neo, BUFFER_SIZE);
+	i = read(fd, yup, BUFFER_SIZE);
 	if (i == -1)
 	{
-		free(neo);
+		free(yup);
 		return (NULL);
 	}
-	buff = ft_strjoin(buff, neo);
-	free(neo);
-	return (buff);
+	if (i == 0)
+	{
+		free(yup);
+		if (!buff)
+			return (NULL);
+		return (buff);
+	}
+	if (!buff)
+		neo = ft_strdup(yup);
+	else
+		neo = ft_strjoin(buff, yup);
+	if (!neo)
+	{
+		free(yup);
+		free(buff);
+		buff = NULL;
+		return (NULL);
+	}
+	free(yup);
+	free(buff);
+	buff = NULL;
+	return (neo);
 }
 
 static char *one_line(const char *buff, char *lain)
@@ -37,12 +57,14 @@ static char *one_line(const char *buff, char *lain)
 
 	i = 0;
 	if (buff[i] == '\0')
-		return (0);
-	while (buff[i] != '\n')
+		return (NULL);
+	while (buff[i] && buff[i] != '\n')
 		i++;
 	lain = ft_calloc(i + 1, 1);
+	if (!lain)
+		return (NULL);
 	if (i != 0)
-		ft_strlcpy(lain, buff, i);
+		ft_strlcpy(lain, buff, i + 1);
 	return (lain);
 }
 
@@ -53,17 +75,16 @@ static char *updtt(char *buff)
 
 	i = 0;
 	j = 0;
-	if (buff[i] == '\0')
-		return (0);
-	while (buff[i] != '\n')
+	while (buff[i] && buff[i] != '\n')
 		i++;
 	j = ft_strlen(&buff[i]);
-	if (j == 0)
+	if (buff[i] == '\0' || j == 0)
 	{
 		free(buff);
+		buff = NULL;
 		return (NULL);
 	}
-	ft_strlcpy(buff, &buff[i + 1], j);
+	ft_memmove(buff, &buff[i + 1], j + 1);
 	return (buff);
 }
 
@@ -71,18 +92,18 @@ char *get_next_line(int fd)
 {
 	static char *buff;
 	char *lain;
-	char *miku;
 
 	lain = NULL;
-	miku = NULL;
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return(NULL);
 	buff = rdd(buff, fd);
-	if (!buff)
-		return (NULL);
 	lain = one_line(buff, lain);
 	if (!lain)
+	{
+		free(buff);
+		buff = NULL;
 		return (NULL);
+	}
 	buff = updtt(buff);
 	return (lain);
 }
