@@ -18,18 +18,37 @@ int main(void)
     //     if (!printf("%s", line))
     //         printf("\nMakaynx\n");
     //     else
-    //         printf("\nKyn\n");
+    //         printf("\nKysn\n");
     //     free(line);
     // }
     line = get_next_line(fd);
-    printf("%s\n", line);
+    printf("1 %s", line);
     line = get_next_line(fd);
-    printf("%s\n", line);
+    printf("2 %s", line);
     line = get_next_line(fd);
-    printf("%s\n", line);
+    printf("3 %s", line);
     line = get_next_line(fd);
-    printf("%s\n", line);
-    printf("sala\n");
+    printf("4 %s", line);
+
     close(fd);
     return (0);
 }
+
+
+
+// int main(void)
+// {
+//     int fd = open("skibidi.txt", O_RDONLY);
+//     char *line;
+
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("Line: %s", line);
+//         free(line);
+//     }
+
+//     close(fd);
+//     return 0;
+// }
+
+

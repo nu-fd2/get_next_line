@@ -6,7 +6,7 @@
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:03:41 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/12/08 23:08:35 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/14 06:52:43 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,25 @@ void	*ft_calloc(size_t count, size_t size)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	i;
 	char	*str;
 
+	size_t	(i), (j), (k);
 	if (!s1 || !s2)
+	{
+		if (s1)
+			return (ft_strdup(s1));
+		if (s2)
+			return (ft_strdup(s2));
 		return (NULL);
-	i = ft_strlen(s1) + ft_strlen(s2) + 1;
-	str = ft_calloc(sizeof(char), i);
+	}
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	k = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = ft_calloc(sizeof(char), k);
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, (char *)s1, i);
-	ft_strlcat(str, (char *)s2, i);
+	ft_strlcpy(str, s1, i + 1);
+	ft_strlcpy(str + i, s2, j + 1);
 	return (str);
 }
 
@@ -113,27 +121,15 @@ char    *ft_strdup(const char *s1)
 	return (s2);
 }
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+char	*ft_strchr(const char *str, int c)
 {
-	size_t			i;
-	unsigned char	*d;
-	unsigned char	*s;
-
-	i = 0;
-	d = dst;
-	s = (unsigned char *)src;
-	if (d == s)
-		return (dst);
-	if (s < d)
-		while (len-- > 0)
-			*(d + len) = *(s + len);
-	else
+	while (*str)
 	{
-		while (len > i)
-		{
-			*(d + i) = *(s + i);
-			i++;
-		}
+		if (*str == (unsigned char)c)
+			return ((char *)str);
+		str++;
 	}
-	return (dst);
+	if ((unsigned char)c == '\0')
+		return ((char *)str);
+	return (NULL);
 }

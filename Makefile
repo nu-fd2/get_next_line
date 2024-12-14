@@ -6,7 +6,7 @@
 #    By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/02 17:24:47 by oel-mado          #+#    #+#              #
-#    Updated: 2024/12/08 19:07:17 by oel-mado         ###   ########.fr        #
+#    Updated: 2024/12/11 17:35:07 by oel-mado         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,13 @@ all: ${OBJ}
 f: fclean all clean
 		cc ${CFLAGS} main.c ${NAME} -o out
 		@echo "-------------------------------------"
-		./out | cat -e
+		./a.out
 		@echo "-------------------------------------"
 		@rm out ${OBJ} ${NAME}
+
+m:
+	@cc main.c get_next_line.c get_next_line_utils.c 
+	@./a.out
 
 clean:
 		rm -f ${OBJ}

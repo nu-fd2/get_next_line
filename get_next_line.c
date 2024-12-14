@@ -6,7 +6,7 @@
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:04:15 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/12/09 00:32:04 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/14 06:53:22 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,48 @@
 
 static char *rdd(char *buff, int fd)
 {
-	char *yup;
-	char *neo;
 	int i;
+	char *yup;
 
 	yup = ft_calloc(BUFFER_SIZE + 1, 1);
 	if (!yup)
 		return (NULL);
-	i = read(fd, yup, BUFFER_SIZE);
-	if (i == -1)
+	i = 1;
+	while (!ft_strchr(yup, '\n') && i != 0)
 	{
-		free(yup);
-		return (NULL);
-	}
-	if (i == 0)
-	{
-		free(yup);
-		if (!buff)
+		i = read(fd, yup, BUFFER_SIZE);
+		if (i < 0)
+		{
+			free(yup);
 			return (NULL);
-		return (buff);
-	}
-	if (!buff)
-		neo = ft_strdup(yup);
-	else
-		neo = ft_strjoin(buff, yup);
-	if (!neo)
-	{
-		free(yup);
-		free(buff);
-		buff = NULL;
-		return (NULL);
+		}
+		yup[i] = '\0';
+		buff = ft_strjoin(buff, yup);
+		if (!buff)
+		{
+			free(yup);
+			return (NULL);
+		}
 	}
 	free(yup);
-	free(buff);
-	buff = NULL;
-	return (neo);
+	return (buff);
 }
 
-static char *one_line(const char *buff, char *lain)
+static char *one_line(const char *buff)
 {
 	size_t i;
+	char *lain;
 
+	lain = NULL;
 	i = 0;
-	if (buff[i] == '\0')
+	if (!buff || buff[i] == '\0')
 		return (NULL);
 	while (buff[i] && buff[i] != '\n')
 		i++;
-	lain = ft_calloc(i + 1, 1);
+	lain = ft_calloc(i + 2, 1);
 	if (!lain)
 		return (NULL);
-	if (i != 0)
-		ft_strlcpy(lain, buff, i + 1);
+	ft_strlcpy(lain, buff, i + 2);
 	return (lain);
 }
 
@@ -72,20 +63,26 @@ static char *updtt(char *buff)
 {
 	size_t i;
 	size_t j;
+	char *neo;
 
 	i = 0;
-	j = 0;
 	while (buff[i] && buff[i] != '\n')
 		i++;
-	j = ft_strlen(&buff[i]);
-	if (buff[i] == '\0' || j == 0)
+	if (buff[i] == '\0')
 	{
 		free(buff);
-		buff = NULL;
 		return (NULL);
 	}
-	ft_memmove(buff, &buff[i + 1], j + 1);
-	return (buff);
+	j = ft_strlen(buff + i + 1);
+	neo = ft_calloc(j + 1, 1);
+	if (!neo)
+	{
+		free(buff);
+		return (NULL);
+	}
+	ft_strlcpy(neo, buff + i + 1, j + 1);
+	free(buff);
+	return (neo);
 }
 
 char *get_next_line(int fd)
@@ -94,10 +91,12 @@ char *get_next_line(int fd)
 	char *lain;
 
 	lain = NULL;
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, buff, 0) == -1)
 		return(NULL);
 	buff = rdd(buff, fd);
-	lain = one_line(buff, lain);
+	if(!buff)
+		return (NULL);
+	lain = one_line(buff);
 	if (!lain)
 	{
 		free(buff);
@@ -105,5 +104,5 @@ char *get_next_line(int fd)
 		return (NULL);
 	}
 	buff = updtt(buff);
-	return (lain);
+	return (lain); 
 }
