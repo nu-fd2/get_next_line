@@ -6,7 +6,7 @@
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:03:41 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/12/14 06:52:43 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/18 07:59:11 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	*ft_calloc(size_t count, size_t size)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
-	size_t	(i), (j), (k);
 	if (!s1 || !s2)
 	{
 		if (s1)
@@ -74,30 +76,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t n)
 	return (ft_strlen(src));
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t n)
-{
-	size_t	i;
-	size_t	j;
-	size_t	k;
-
-	i = 0;
-	j = 0;
-	if (!dst && !n)
-		return (ft_strlen(src));
-	k = ft_strlen((const char *)dst);
-	if (n < ft_strlen(dst))
-		return (ft_strlen(src) + n);
-	while (dst[i] && i + 1 < n)
-		i++;
-	while (src[j] && i + j + 1 < n)
-	{
-		dst[i + j] = src[j];
-		j++;
-		dst[i + j] = '\0';
-	}
-	return (k + ft_strlen(src));
-}
-
 size_t	ft_strlen(const char *who)
 {
 	size_t	ask;
@@ -106,19 +84,6 @@ size_t	ft_strlen(const char *who)
 	while (who[ask])
 		ask++;
 	return (ask);
-}
-
-char    *ft_strdup(const char *s1)
-{
-	size_t  ln;
-	char    *s2;
-
-	ln = ft_strlen(s1) + 1;
-	s2 = malloc(sizeof(char) * ln);
-	if (!s2)
-			return (NULL);
-	ft_strlcpy(s2, s1, ln);
-	return (s2);
 }
 
 char	*ft_strchr(const char *str, int c)
