@@ -1,54 +1,21 @@
 #include "get_next_line.h"
+#include "../ft_printf/src/ft_printf.h"
+#include <stdio.h>
+#include <fcntl.h>
 
-int main(void)
+int	main(void)
 {
-    int fd = open("skibidi.txt", O_RDONLY);
-    if (fd == -1)
+    int		fd;
+    char	*line;
+
+    fd = open("txt.txt", O_RDONLY);
+    line = get_next_line(fd);
+    while (line)
     {
-        perror("Error opening file");
-        return (1);
+        ft_printf("%s", line);
+        free(line);
+        line = get_next_line(fd);
     }
-
-    char *line = NULL;
-
-    printf("fd  = %d\n", fd);
-    // while ((line = get_next_line(fd)) != NULL)
-    // {
-    //     printf("Str :\n");
-    //     if (!printf("%s", line))
-    //         printf("\nMakaynx\n");
-    //     else
-    //         printf("\nKysn\n");
-    //     free(line);
-    // }
-    line = get_next_line(fd);
-    printf("1 %s", line);
-    line = get_next_line(fd);
-    printf("2 %s", line);
-    line = get_next_line(fd);
-    printf("3 %s", line);
-    line = get_next_line(fd);
-    printf("4 %s", line);
-
     close(fd);
     return (0);
 }
-
-
-
-// int main(void)
-// {
-//     int fd = open("skibidi.txt", O_RDONLY);
-//     char *line;
-
-//     while ((line = get_next_line(fd)) != NULL)
-//     {
-//         printf("Line: %s", line);
-//         free(line);
-//     }
-
-//     close(fd);
-//     return 0;
-// }
-
-

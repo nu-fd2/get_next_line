@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:04:15 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/12/19 20:29:42 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:29:47 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*rdd(char *buff, int fd)
 {
@@ -82,23 +82,27 @@ char	*updtt(char *buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff;
+	static char	*buff[10240];
 	char		*lain;
+	int			i;
 
+	i = fd;
 	lain = NULL;
-	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, buff, 0) == -1)
+	if (i > 10240)
+		return (NULL);
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, buff[i], 0) == -1)
 	{
-		if (buff)
-			return (free(buff), buff = NULL, NULL);
+		if (buff[i])
+			return (free(buff[i]), buff[i] = NULL, NULL);
 		return (NULL);
 	}
-	buff = rdd(buff, fd);
-	if (!buff)
+	buff[i] = rdd(buff[i], fd);
+	if (!buff[i])
 		return (NULL);
-	lain = one_line(buff);
+	lain = one_line(buff[i]);
 	if (!lain)
-		return (free(buff), buff = NULL, NULL);
-	buff = updtt(buff);
+		return (free(buff[i]), buff[i] = NULL, NULL);
+	buff[i] = updtt(buff[i]);
 	return (lain); 
 }
 
