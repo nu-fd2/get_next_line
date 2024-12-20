@@ -6,7 +6,7 @@
 /*   By: oel-mado <oel-mado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 11:04:15 by oel-mado          #+#    #+#             */
-/*   Updated: 2024/12/19 20:29:42 by oel-mado         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:34:30 by oel-mado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*rdd(char *buff, int fd)
 
 	yup = ft_calloc(BUFFER_SIZE + 1, 1);
 	if (!yup)
-		return (NULL);
+		return (free(buff), buff = NULL, NULL);
 	i = 1;
 	while (!ft_strchr(yup, '\n') && i != 0)
 	{
